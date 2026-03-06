@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: friendly-learning-buddy-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin-test
+      MONGO_INITDB_ROOT_PASSWORD: Password123
+    ports:
+      - "37017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
+    driver: local

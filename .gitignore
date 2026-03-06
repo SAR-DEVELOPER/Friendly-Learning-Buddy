@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+build
+dist
+.next
+.vercel
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Payload CMS
+friendly-learning-buddy/public/media/
+friendly-learning-buddy/public/robots.txt
+friendly-learning-buddy/public/sitemap*.xml
+
+# Misc
+*.tsbuildinfo
+.cursor/
