@@ -13,6 +13,7 @@ import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
 import { Banner } from '../../blocks/Banner/config'
 import { Code } from '../../blocks/Code/config'
+import { GoogleSheetsBlock } from '../../blocks/GoogleSheets/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
@@ -42,6 +43,8 @@ export const Posts: CollectionConfig<'posts'> = {
     title: true,
     slug: true,
     categories: true,
+    subtitle: true,
+    chapter: true,
     meta: {
       image: true,
       description: true,
@@ -89,7 +92,7 @@ export const Posts: CollectionConfig<'posts'> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    BlocksFeature({ blocks: [Banner, Code, MediaBlock, GoogleSheetsBlock] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),
@@ -160,6 +163,22 @@ export const Posts: CollectionConfig<'posts'> = {
           ],
         },
       ],
+    },
+    {
+      name: 'subtitle',
+      type: 'text',
+      admin: {
+        position: 'sidebar',
+        description: 'Subtitle atau deskripsi singkat essay yang ditampilkan di daftar chapter.',
+      },
+    },
+    {
+      name: 'chapter',
+      type: 'relationship',
+      relationTo: 'chapters',
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'publishedAt',

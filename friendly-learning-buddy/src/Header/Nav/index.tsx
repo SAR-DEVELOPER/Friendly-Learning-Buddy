@@ -32,10 +32,12 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
         label="Finance"
         href="/finance"
         items={[
-          { label: 'Fundamentals', href: '/search?q=Finance%20Fundamentals' },
-          { label: 'Strategic Finance', href: '/search?q=Strategic%20Finance' },
-          { label: 'Financial Planning', href: '/search?q=Financial%20Planning' },
-          { label: 'Financial Analytics', href: '/search?q=Financial%20Analytics' },
+          { label: 'Fundamentals', href: '/finance/fundamentals' },
+          { label: 'Strategic Finance', href: '/finance/strategic-finance' },
+          { label: 'Planning and Forecasting', href: '/finance/planning-and-forecasting' },
+          { label: 'Financial Analytics', href: '/finance/financial-analytics' },
+          { label: 'Capital Allocation', href: '/finance/capital-allocation' },
+          { label: 'Finance in Action', href: '/finance/finance-in-action' },
         ]}
       />
       <HeaderDropdown

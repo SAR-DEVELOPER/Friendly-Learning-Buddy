@@ -71,6 +71,7 @@ export interface Config {
     posts: Post;
     media: Media;
     categories: Category;
+    chapters: Chapter;
     users: User;
     redirects: Redirect;
     forms: Form;
@@ -93,6 +94,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    chapters: ChaptersSelect<false> | ChaptersSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -250,6 +252,11 @@ export interface Post {
     image?: (string | null) | Media;
     description?: string | null;
   };
+  /**
+   * Subtitle atau deskripsi singkat essay yang ditampilkan di daftar chapter.
+   */
+  subtitle?: string | null;
+  chapter?: (string | null) | Chapter;
   publishedAt?: string | null;
   authors?: (string | User)[] | null;
   populatedAuthors?:
@@ -407,6 +414,33 @@ export interface Category {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "chapters".
+ */
+export interface Chapter {
+  id: string;
+  title: string;
+  description?: string | null;
+  /**
+   * Urutan chapter (1, 2, 3, ...). Digunakan untuk menentukan nomor 01, 02, 03 pada halaman.
+   */
+  order: number;
+  subcategory:
+    | 'fundamentals'
+    | 'strategic-finance'
+    | 'planning-and-forecasting'
+    | 'financial-analytics'
+    | 'capital-allocation'
+    | 'finance-in-action';
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -985,6 +1019,10 @@ export interface PayloadLockedDocument {
         value: string | Category;
       } | null)
     | ({
+        relationTo: 'chapters';
+        value: string | Chapter;
+      } | null)
+    | ({
         relationTo: 'users';
         value: string | User;
       } | null)
@@ -1202,6 +1240,8 @@ export interface PostsSelect<T extends boolean = true> {
         image?: T;
         description?: T;
       };
+  subtitle?: T;
+  chapter?: T;
   publishedAt?: T;
   authors?: T;
   populatedAuthors?:
@@ -1327,6 +1367,20 @@ export interface CategoriesSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "chapters_select".
+ */
+export interface ChaptersSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  order?: T;
+  subcategory?: T;
+  generateSlug?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1789,6 +1843,24 @@ export interface CodeBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'code';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GoogleSheetsBlock".
+ */
+export interface GoogleSheetsBlock {
+  /**
+   * SharePoint/OneDrive: buka file di SharePoint → klik (...) → Embed → copy HANYA bagian src="..." dari kode iframe (formatnya harus /_layouts/15/Doc.aspx?sourcedoc=...). JANGAN gunakan share link biasa (:x:/g/...) karena tidak bisa di-embed. Google Sheets: paste URL edit biasa, misal https://docs.google.com/spreadsheets/d/ID/edit
+   */
+  url: string;
+  /**
+   * Tinggi iframe dalam piksel. Default: 500.
+   */
+  height?: number | null;
+  caption?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'googleSheets';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

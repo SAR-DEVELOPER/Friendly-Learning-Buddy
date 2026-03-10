@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la /e/PS/Friendly-Learning-Buddy/friendly-learning-buddy/src/app/\\\\\\(payload\\\\\\)/)",
+      "Bash(ls -la \"e:/PS/Friendly-Learning-Buddy/friendly-learning-buddy/src/app/\\(frontend\\)/\")"
+    ]
+  }
+}
