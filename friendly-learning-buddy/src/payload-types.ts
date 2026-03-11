@@ -435,7 +435,8 @@ export interface Chapter {
     | 'planning-and-forecasting'
     | 'financial-analytics'
     | 'capital-allocation'
-    | 'finance-in-action';
+    | 'finance-in-action'
+    | 'flsi';
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -1861,6 +1862,21 @@ export interface GoogleSheetsBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'googleSheets';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "KeyPointsBlock".
+ */
+export interface KeyPointsBlock {
+  points?:
+    | {
+        point: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'keyPoints';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

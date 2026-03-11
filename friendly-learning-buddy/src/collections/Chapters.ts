@@ -45,6 +45,7 @@ export const Chapters: CollectionConfig = {
         { label: 'Financial Analytics', value: 'financial-analytics' },
         { label: 'Capital Allocation', value: 'capital-allocation' },
         { label: 'Finance in Action', value: 'finance-in-action' },
+        { label: 'FLSI (Accounting)', value: 'flsi' },
       ],
     },
     slugField({
