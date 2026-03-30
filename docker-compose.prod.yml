@@ -1,0 +1,94 @@
+# Production docker-compose for Friendly Learning Buddy
+#
+# Build image first (requires MongoDB running on host):
+#   DOCKER_BUILDKIT=1 docker build \
+#     --secret id=env_file,src=friendly-learning-buddy/.env.docker-build \
+#     -t friendly-learning-buddy:latest \
+#     ./friendly-learning-buddy
+#
+# Run:
+#   docker compose --env-file .env.prod -f docker-compose.prod.yml up -d
+
+services:
+
+  app:
+    image: friendly-learning-buddy:latest
+    container_name: flb-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.prod
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    volumes:
+      - media_data:/app/public/media
+    networks:
+      - flb-net
+    # --- Hardening ---
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:mode=1777,size=128m
+      - /app/.next/cache:mode=755,size=256m
+    # --- Resources ---
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+  mongodb:
+    image: mongo:latest
+    container_name: flb-mongodb
+    restart: unless-stopped
+    # No external port — internal network only
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - flb-net
+    # --- Hardening ---
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETUID
+      - SETGID
+      - DAC_OVERRIDE
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    # --- Resources ---
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 256M
+
+networks:
+  flb-net:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
+  media_data:
+    driver: local
