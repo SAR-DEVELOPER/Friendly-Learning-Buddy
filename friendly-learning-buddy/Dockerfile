@@ -30,7 +30,8 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN \
+# .env is mounted as a BuildKit secret — available during build only, not stored in the image
+RUN --mount=type=secret,id=env_file,target=/app/.env \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \

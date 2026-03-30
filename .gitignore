@@ -40,6 +40,9 @@ friendly-learning-buddy/public/media/
 friendly-learning-buddy/public/robots.txt
 friendly-learning-buddy/public/sitemap*.xml
 
+# Backups
+backups/
+
 # Misc
 *.tsbuildinfo
 .cursor/
