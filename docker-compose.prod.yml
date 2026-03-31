@@ -31,10 +31,7 @@ services:
       - no-new-privileges:true
     cap_drop:
       - ALL
-    read_only: true
-    tmpfs:
-      - /tmp:mode=1777,size=128m
-      - /app/.next/cache:mode=755,size=256m
+    user: "1001:1001"
     # --- Resources ---
     deploy:
       resources:
@@ -49,7 +46,8 @@ services:
     image: mongo:latest
     container_name: flb-mongodb
     restart: unless-stopped
-    # No external port — internal network only
+    ports:
+      - "37017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
@@ -82,6 +80,21 @@ services:
         reservations:
           cpus: '0.1'
           memory: 256M
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: flb-cloudflared
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on:
+      - app
+    networks:
+      - flb-net
+    # --- Hardening ---
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
 
 networks:
   flb-net:
