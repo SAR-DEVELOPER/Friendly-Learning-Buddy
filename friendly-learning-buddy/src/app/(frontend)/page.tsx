@@ -5,8 +5,7 @@ import React from 'react'
 import Link from 'next/link'
 import { Media } from '@/components/Media'
 
-export const dynamic = 'force-static'
-export const revalidate = 600
+export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
   const payload = await getPayload({ config: configPromise })

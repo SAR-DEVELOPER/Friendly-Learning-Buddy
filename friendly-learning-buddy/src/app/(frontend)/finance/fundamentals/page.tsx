@@ -6,8 +6,7 @@ import { Breadcrumb } from '@/components/Breadcrumb'
 import { ChapterAccordion } from '@/components/ChapterAccordion'
 import PageClient from '../[subcategory]/page.client'
 
-export const dynamic = 'force-static'
-export const revalidate = 600
+export const dynamic = 'force-dynamic'
 
 export default async function FundamentalsPage() {
   const payload = await getPayload({ config: configPromise })

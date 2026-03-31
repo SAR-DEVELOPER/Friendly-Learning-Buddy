@@ -14,28 +14,11 @@ import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { TableOfContents } from '@/components/TableOfContents'
+import { extractHeadings } from '@/utilities/headings'
 
 export const dynamic = 'force-dynamic'
 
-export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const posts = await payload.find({
-    collection: 'posts',
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-    select: {
-      slug: true,
-    },
-  })
-
-  const params = posts.docs.map(({ slug }) => {
-    return { slug }
-  })
-
-  return params
-}
 
 type Args = {
   params: Promise<{
@@ -64,17 +47,30 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <PostHero post={post} />
 
-      <div className="flex flex-col items-center gap-4 pt-8">
-        <div className="container">
-          <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
-          {post.relatedPosts && post.relatedPosts.length > 0 && (
-            <RelatedPosts
-              className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
-              docs={post.relatedPosts.filter((post) => typeof post === 'object')}
-            />
-          )}
-        </div>
-      </div>
+      {(() => {
+        const headings = extractHeadings(post.content)
+        const hasTOC = headings.length >= 2
+        return (
+          <div className={`pt-8 flex gap-8 justify-center px-4 xl:px-8`}>
+            {/* Main content */}
+            <div className="w-full max-w-[48rem] min-w-0">
+              <RichText data={post.content} enableGutter={false} />
+              {post.relatedPosts && post.relatedPosts.length > 0 && (
+                <RelatedPosts
+                  className="mt-12 max-w-[52rem] lg:grid lg:grid-cols-subgrid col-start-1 col-span-3 grid-rows-[2fr]"
+                  docs={post.relatedPosts.filter((post) => typeof post === 'object')}
+                />
+              )}
+            </div>
+            {/* TOC — outside container, sticky */}
+            {hasTOC && (
+              <aside className="hidden xl:block flex-shrink-0 self-start sticky top-20">
+                <TableOfContents headings={headings} />
+              </aside>
+            )}
+          </div>
+        )
+      })()}
     </article>
   )
 }

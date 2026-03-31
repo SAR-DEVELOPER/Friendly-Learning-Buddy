@@ -7,8 +7,7 @@ import { Breadcrumb } from '@/components/Breadcrumb'
 import { ChapterAccordion } from '@/components/ChapterAccordion'
 import PageClient from './page.client'
 
-export const dynamic = 'force-static'
-export const revalidate = 600
+export const dynamic = 'force-dynamic'
 
 type SubcategoryKey =
   | 'fundamentals'

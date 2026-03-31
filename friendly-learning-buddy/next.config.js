@@ -24,6 +24,10 @@ const nextConfig = {
         hostname: 'flb.centri.id',
       },
       {
+        protocol: 'https',
+        hostname: 'testflb.centri.id',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
       },

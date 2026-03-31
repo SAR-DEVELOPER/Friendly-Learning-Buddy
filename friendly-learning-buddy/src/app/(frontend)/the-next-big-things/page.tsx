@@ -8,8 +8,7 @@ import { Breadcrumb } from '@/components/Breadcrumb'
 import PageClient from './page.client'
 import { PostsList } from './components/PostsList'
 
-export const dynamic = 'force-static'
-export const revalidate = 600
+export const dynamic = 'force-dynamic'
 
 const CATEGORIES = [
   { id: 'technology', label: 'Technology', icon: '💻' },

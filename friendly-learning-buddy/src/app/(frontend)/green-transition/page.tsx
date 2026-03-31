@@ -7,8 +7,7 @@ import Image from 'next/image'
 import { Breadcrumb } from '@/components/Breadcrumb'
 import PageClient from './page.client'
 
-export const dynamic = 'force-static'
-export const revalidate = 600
+export const dynamic = 'force-dynamic'
 
 export default async function AccountingPage() {
   const payload = await getPayload({ config: configPromise })

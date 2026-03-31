@@ -23,6 +23,7 @@ import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { GoogleSheetsEmbed } from '@/blocks/GoogleSheets/Component'
 import { KeyPointsBlock } from '@/blocks/KeyPoints/Component'
 import { cn } from '@/utilities/ui'
+import { generateHeadingId } from '@/utilities/headings'
 
 type KeyPointsBlockProps = {
   blockType: 'keyPoints'
@@ -54,6 +55,12 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
+  heading: ({ node, nodesToJSX }: any) => {
+    const Tag = node.tag as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+    const text = (node.children || []).map((c: any) => c.text || '').join('')
+    const id = generateHeadingId(text)
+    return <Tag id={id}>{nodesToJSX({ nodes: node.children || [] })}</Tag>
+  },
   blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: ({ node }) => (
