@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import React, { useState, useRef } from 'react'
+import { SearchIcon } from 'lucide-react'
 
 type Item = {
   label: string
@@ -12,11 +13,17 @@ type Props = {
   label: string
   items: Item[]
   href?: string
+  hasSearch?: boolean
 }
 
-export const HeaderDropdown: React.FC<Props> = ({ label, items, href }) => {
+export const HeaderDropdown: React.FC<Props> = ({ label, items, href, hasSearch }) => {
   const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
   const containerRef = useRef<HTMLDivElement | null>(null)
+
+  const filtered = hasSearch && query.trim()
+    ? items.filter((i) => i.label.toLowerCase().includes(query.toLowerCase()))
+    : items
 
   const buttonContent = (
     <>
@@ -37,23 +44,23 @@ export const HeaderDropdown: React.FC<Props> = ({ label, items, href }) => {
   )
 
   return (
-    <div 
-      className="relative" 
+    <div
+      className="relative"
       ref={containerRef}
       onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseLeave={() => { setOpen(false); setQuery('') }}
     >
       {href ? (
         <Link
           href={href}
-          className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg text-white border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-white hover:opacity-90 transition-opacity"
         >
           {buttonContent}
         </Link>
       ) : (
         <button
           type="button"
-          className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg text-white border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-white hover:opacity-90 transition-opacity"
         >
           {buttonContent}
         </button>
@@ -62,8 +69,21 @@ export const HeaderDropdown: React.FC<Props> = ({ label, items, href }) => {
       {open && (
         <div className="absolute right-0 top-full pt-2 w-64 z-30">
           <div className="rounded-lg border border-white/20 bg-[#0f2744] shadow-xl shadow-black/20 p-2">
+            {hasSearch && (
+              <div className="flex items-center gap-2 px-2 py-1.5 mb-1 bg-white/5 rounded-md">
+                <SearchIcon className="w-3.5 h-3.5 text-white/50 shrink-0" />
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search..."
+                  className="w-full bg-transparent text-sm text-white placeholder-white/40 outline-none"
+                  autoFocus
+                />
+              </div>
+            )}
             <ul className="py-1">
-              {items.map((item) => (
+              {filtered.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
@@ -73,6 +93,9 @@ export const HeaderDropdown: React.FC<Props> = ({ label, items, href }) => {
                   </Link>
                 </li>
               ))}
+              {filtered.length === 0 && (
+                <li className="px-3 py-2 text-sm text-white/40 italic">No results</li>
+              )}
             </ul>
           </div>
         </div>
@@ -80,4 +103,3 @@ export const HeaderDropdown: React.FC<Props> = ({ label, items, href }) => {
     </div>
   )
 }
-

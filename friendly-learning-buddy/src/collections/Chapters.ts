@@ -46,6 +46,10 @@ export const Chapters: CollectionConfig = {
         { label: 'Capital Allocation', value: 'capital-allocation' },
         { label: 'Finance in Action', value: 'finance-in-action' },
         { label: 'FLSI (Accounting)', value: 'flsi' },
+        { label: 'Where We Are Now (Green Transition)', value: 'where-we-are' },
+        { label: 'Challenges Ahead (Green Transition)', value: 'challenges' },
+        { label: 'Pathways Forward (Green Transition)', value: 'pathways' },
+        { label: 'Climate Finance (Green Transition)', value: 'climate-finance' },
       ],
     },
     slugField({

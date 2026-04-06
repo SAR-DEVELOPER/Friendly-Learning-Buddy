@@ -40,9 +40,10 @@ const mobileMenuSections = [
     label: 'The Green Transition',
     href: '/green-transition',
     items: [
-      { label: 'Where Are We Now', href: '/search?q=Green%20Transition%20Where%20Are%20We%20Now' },
-      { label: 'Challenges Ahead', href: '/search?q=Green%20Transition%20Challenges%20Ahead' },
-      { label: 'Pathway Forward', href: '/search?q=Green%20Transition%20Pathway%20Forward' },
+      { label: 'Where We Are Now', href: '/green-transition/where-we-are' },
+      { label: 'Challenges Ahead', href: '/green-transition/challenges' },
+      { label: 'Pathways Forward', href: '/green-transition/pathways' },
+      { label: 'Climate Finance', href: '/green-transition/climate-finance' },
     ],
   },
   {
