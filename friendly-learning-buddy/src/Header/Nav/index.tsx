@@ -52,32 +52,29 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
       />
       <HeaderDropdown
         label="The Next Big Things"
-        href="/the-next-big-things"
         items={[
-          { label: 'Technology', href: '/search?q=Next%20Big%20Things%20Technology' },
-          { label: 'Economy', href: '/search?q=Next%20Big%20Things%20Economy' },
-          { label: 'Society', href: '/search?q=Next%20Big%20Things%20Society' },
-          { label: 'Environment', href: '/search?q=Next%20Big%20Things%20Environment' },
-          { label: 'Governance', href: '/search?q=Next%20Big%20Things%20Governance' },
+          { label: 'Technology', href: '/the-next-big-things/technology' },
+          { label: 'Economy', href: '/the-next-big-things/economy' },
+          { label: 'Society', href: '/the-next-big-things/society' },
+          { label: 'Environment', href: '/the-next-big-things/environment' },
+          { label: 'Governance', href: '/the-next-big-things/governance' },
         ]}
       />
       <HeaderDropdown
         label="Development Finance"
-        href="/development-finance"
         items={[
-          { label: 'Sovereign Wealth Funds', href: '/search?q=Next%20Big%20Things%20Technology' },
-          { label: 'Multilateral Development Banks', href: '/search?q=Next%20Big%20Things%20Economy' },
-          { label: 'Blended Finance', href: '/search?q=Next%20Big%20Things%20Society' },
-          { label: 'Indonesia Capital Architecture', href: '/search?q=Next%20Big%20Things%20Environment' },
+          { label: 'Sovereign Wealth Funds', href: '/development-finance/sovereign-wealth-funds' },
+          { label: 'Multilateral Development Banks', href: '/development-finance/multilateral-development-banks' },
+          { label: 'Blended Finance', href: '/development-finance/blended-finance' },
+          { label: 'Indonesia Capital Architecture', href: '/development-finance/indonesia-capital-architecture' },
         ]}
       />
       <HeaderDropdown
         label="Learning"
-        href="/learning"
         items={[
-          { label: 'Critical Thinking', href: '/search?q=Critical%20Thinking' },
-          { label: 'Books', href: '/search?q=Books' },
-          { label: 'IELTS', href: '/search?q=IELTS' },
+          { label: 'Critical Thinking', href: '/learning/critical-thinking' },
+          { label: 'Books', href: '/learning/books' },
+          { label: 'IELTS', href: '/learning/ielts' },
         ]}
       />
 

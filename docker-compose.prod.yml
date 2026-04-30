@@ -46,8 +46,10 @@ services:
     image: mongo:latest
     container_name: flb-mongodb
     restart: unless-stopped
+    # Port hanya dibuka untuk keperluan development (Compass, dll)
+    # Tutup di production nyata dengan comment baris di bawah:
     ports:
-      - "37017:27017"
+      - "127.0.0.1:37017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
