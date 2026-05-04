@@ -6,8 +6,10 @@ node_modules
 .next
 .vercel
 
-# Payload default media upload directory
-public/media/
+# Payload default media upload directory — ignore semua kecuali folder logo
+public/media/*
+!public/media/logo/
+!public/media/logo/**
 
 public/robots.txt
 public/sitemap*.xml
